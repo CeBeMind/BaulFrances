@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>El Baúl francés - Aprende francés, sus curiosidades, su color.</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="main.css">
+</head>
+<body>
+<div id="App" class="full-width">
+	<transition name="fade" mode="out-in">
+		<section v-if="currentPage.index==-1" class="grid-rows-to-bottom bg-white1" key="Mainpage">
+			<nav class="row nav bg-blue-navy tx-white top-sticky pers-nav" id="Navbar">
+				<ul class="list on-right">
+					<li class="item tx-ii tx-ui-strong pad-l-i pad-r-i"><a class="nav-link link tx-hv-b1" @click="handlePageChange($event,1,'Artículos')">Entradas del Blog</a></li>
+					<li class="item tx-ii tx-ui-strong pad-l-i pad-r-i"><a class="nav-link link tx-hv-b1">Acerca de</a></li>
+					<li class="item tx-ii tx-ui-strong pad-l-i pad-r-i"><a class="nav-link button plain to action rnd">Contacto</a></li>
+				</ul>
+			</nav>
+			<header class="row header pers-start-div" id="MainpageHeader">
+				<div class="block mediumw bigh pad-l-i pad-r-i pad-top-i pers-hphrase shdw mid-rnd">
+					<h1 class="tx-v tx-script tx-white pers-text">¡Bienvenido al Baúl Francés!</h1>
+					<h2 class="tx-iii tx-paragraph tx-white pers-text">Un blog para aprender sobre el idioma, su aura, su cultura, sus curiosidades y su historia.</h2>
+				</div>
+				<div class="mediumw full-height pers-eiffeldiv">
+				<div class="flag" id="Flag">
+					<span class="goBack"></span>
+					<span class="goBack"></span>
+					<span class="goBack"></span>
+				</div>
+					<img src="assets/images/eiffeltower.png" alt="Torre Eiffel Sin Fondo" class="pers-eiffel">
+				</div>
+			</header>
+			<div class="row pers-proverb-div" id="MainpageLearnDiv">
+					<span class="expand-circle"></span>
+					<h3 class="tx-iii tx-elegant-strong pers-text"></h3>
+					<div class="pers-image-cont">
+					<img src="assets/images/map.jpg" alt="Mapa de Europa enfocado en Francia" class="pers-image" />
+					</div>
+			</div>
+			<div class="row pers-history-div bg-white1" id="MainpageHistDiv">
+					<div class="image fadeIn inactive">
+						<img src="assets/images/france2.jpg" class="showFromBottom">	
+					</div>
+					<div class="image fadeIn inactive">
+						<img src="assets/images/france2.jpg" class="showFromBottom">
+					</div>
+					<div class="image fadeIn inactive">
+						<img src="assets/images/france2.jpg" class="showFromBottom">
+					</div>
+					<h3 class="tx-iv tx-elegant-strong pers-text hidden" id="MainpageHistPhrase">Explora la historia del idioma</h3>
+			</div>
+			<div class="row pers-grammar-div" id="MainpageGrammarDiv">
+				<h3 class="tx-v tx-elegant-strong pers-text">Comprende su gramática</h3>
+				<img src="assets/images/writing.jpg" alt="Persona escribiendo" class="pers-image" />
+			</div>
+			<div class="row row-add pers-connect-div bg-white1" id="MainpageConnectDiv">
+				<h3 class="tx-iv tx-elegant-strong mar-top mar-left pers-text">Todo y más, en el baúl francés</h2>
+				<div class="mediumw full-height pers-circles">
+					<span></span>
+					<span></span>
+					<span></span>
+					<a class="button minimalist black pers-button" @click="handlePageChange($event,1,'Artículos')">Entrar&thinsp;al&thinsp;blog &rarr;</a>
+				</div>
+			</div>
+		</section>
+		<section v-else-if="currentPage.index!=-1" class="grid-smheader nomp" key="Blog">
+		<header class="header bg-blue1">
+			<h1 class="tx-iv tx-script tx-white clickable" @click="handlePageChange($e,0,'Artículos')"> {{sitename}} </h1>
+		</header>
+		<nav class="nav full-width top-sticky">
+			<ul class="list slice5 line neumorph nomp full-width">
+			<a v-for="(opt,index) in navOptions" class="item nav-link tx-ii tx-ui-strong full-width" @click="handlePageChange($event,index,opt)">{{opt}}</a>
+			<span class="effect-span bg-red2"></span>
+			</ul>	
+		</nav>
+		<div class="title tx-ii tx-elegant bg-white1 mar-left">
+			{{randomPhrase}}
+		</div>
+		<main class="narcissist full-width pad-top-ii pad-bttm-ii centered bg-white1">
+			<transition name="zoom-out" mode="out-in">
+			<section v-if="currentPage.index==1" class="main" key="articles-list">
+			<article-preview v-if="currentPage.index==1" v-for="(article, index) in articles" class="card mediumw mediumh model1 rnd clickable neumorph rot15dyn tx-white tx-ui" :title="article.title" :description="article.description" @click.native="handlePageChange($event,index+10,article.title)" :key="'preview_' + article.title"></article-preview>
+			</section>
+			<section v-else-if="currentPage.index >= 10" :key="'article_' + articleContent.t">
+			<article-f1 :title='articleContent.t':subtitle="articleContent.d">
+			<section slot="article-content" v-html="articleContent.c" class="pers-article"></section>
+			</article-f1>
+			</section>
+			<section v-if="currentPage.index == 0 || (currentPage.index >= 2 && currentPage.index <= 4)">
+				<in-progress></in-progress>
+			</section>
+			</transition>
+		</main>
+		</section>
+	</transition>
+	<div class="pers-footer bg-blue-navy tx-silver tx-ii bottom-sticky">
+		<div class="col mar-top">
+		<img src="assets/images/vuelogo.png" class="pers-vuelogo">
+		<p>Hecho en Vue.js</p>
+		<p>¿Qué es Vue.js?</p>
+		<p>Ir a la web de Vue.js</p>
+		</div>
+		<div class="col mar-top mar-right">
+		<p>Copyright 2020. Todos los derechos reservados.</p>	
+		</div>
+	</div>
+	<component v-show="currentEffect" :is="currentEffect"></component>
+</div>
+<script src="assets/vue.js"></script>
+<script src="main.js"></script>
+<script src="css.js"></script>
+</body>
+</html>
