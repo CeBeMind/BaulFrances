@@ -2,7 +2,7 @@ w = window;
 body = document.getElementsByTagName("body")[0];
 Flag = document.getElementById("Flag");
 flagColors = Flag.getElementsByTagName('span');
-NavbarM = document.getElementById("Navbar");
+NavbarM = document.getElementById("MainpageNavbar");
 MainpageM = document.getElementById("MainpageHeader");
 LearnDivM = document.getElementById("MainpageLearnDiv");
 HistDivM = document.getElementById("MainpageHistDiv");
@@ -12,6 +12,11 @@ GrammarDivM = document.getElementById("MainpageGrammarDiv");
 GrammarDivText = GrammarDivM.getElementsByClassName("pers-text")[0];
 ConnectDivM = document.getElementById("MainpageConnectDiv");
 ConnectDivCircles = ConnectDivM.getElementsByTagName("span");
+
+HeaderB = document.getElementById("BlogHeader");
+NavbarB = document.getElementById("BlogNavbar");
+
+Footer = document.getElementById("Footer");
 
 var last_scroll_position = w.pageYOffset+w.innerHeight, last_scroll_direction;
 
@@ -105,7 +110,7 @@ const navbarChanger = new IntersectionObserver(function(entries, observer){
 			NavbarM.classList.add("bg-blue-navy");
 			NavbarM.classList.add("tx-white");
 			for (let i = 0; i < NavbarM.getElementsByClassName("link").length; i++){
-				NavbarM.getElementsByClassName("link")[i].classList.remove('tx-hv-line');
+				NavbarM.getElementsByClassName("link")[i].classList.remove('button-hv-line');
 				NavbarM.getElementsByClassName("link")[i].classList.add('tx-hv-b1');
 			}
 			NavbarM.classList.remove("bg-transparent");
@@ -114,7 +119,7 @@ const navbarChanger = new IntersectionObserver(function(entries, observer){
 			NavbarM.classList.remove("tx-white");
 			for (let i = 0; i < NavbarM.getElementsByClassName("link").length; i++) {
 					NavbarM.getElementsByClassName("link")[i].classList.remove('tx-hv-b1');
-					NavbarM.getElementsByClassName("link")[i].classList.add('tx-hv-line');
+					NavbarM.getElementsByClassName("link")[i].classList.add('button-hv-line');
 		}
 			NavbarM.classList.add("bg-transparent");
 		}
@@ -122,6 +127,52 @@ const navbarChanger = new IntersectionObserver(function(entries, observer){
 }, {threshold: 0, rootMargin: "0px"});
 
 navbarChanger.observe(MainpageM);
+
+w.addEventListener('scroll', (e) => {
+		if (last_scroll_direction === 1){
+			if (NavbarM.classList.contains("top-sticky") === true){
+				NavbarM.style.transform = "translateY(-100%)";
+				
+				setTimeout(function(){NavbarM.classList.remove("top-sticky"); NavbarM.style.transform = "";},600);
+			}
+		} else if (last_scroll_direction === -1){
+			if (NavbarM.classList.contains("top-sticky") === false){
+				NavbarM.style.transform = "translateY(-100%)";
+				NavbarM.classList.add("top-sticky");
+				NavbarM.style.transform = "";
+			}
+		}
+});
+/*
+const insertNavbarLogo = new IntersectionObserver(function(entries, observer){
+	for (entry of entries){
+		if (entry.isIntersecting)
+			document.getElementById("BlogNavbarLogo").classList.toggle("left-out");
+		else
+			document.getElementById("BlogNavbarLogo").classList.toggle("left-out");
+		}
+}, {threshold: 0, rootMargin: "30px"});
+
+insertNavbarLogo.observe(HeaderB);
+*/
+
+const appearFooter = new IntersectionObserver(function(entries, observer){
+	for (entry of entries){
+		if (entry.isIntersecting){
+			Footer.classList.add("bottom-sticky");
+			w.addEventListener('scroll', checkLeave);
+
+			function checkLeave(){
+				if (document.documentElement.scrollHeight-288 >  last_scroll_position){
+					Footer.classList.remove("bottom-sticky");
+					w.removeEventListener('scroll', checkLeave);
+				}
+			}
+		}
+	}
+}, {threshold: 0.9, rootMargin: "144px"});
+
+appearFooter.observe(Footer);
 
 const toTop = new IntersectionObserver(function(entries, observer){
 	for (entry of entries){
@@ -193,17 +244,19 @@ const appearText = new IntersectionObserver(function(entries, observer){
 			w.addEventListener('scroll', addLetters);
 
 			function addLetters(){
-				var percent = (Math.floor(((last_scroll_position-basis)*arr.length)/size));
+				var percent = (Math.floor(((last_scroll_position-basis)*arr.length)/size+2));
 				if (percent <= arr.length){
 					string.innerHTML = arr.slice(0, percent);
+				} else {
+					string.innerHTML = arr;
 				}
 			}
 		} else if (!entry.isIntersecting){
-			string.innerHTML = arr;
+			string.innerHTML = arr.slice(0,1);
 			w.removeEventListener('scroll', addLetters);
 		}
 	}
-}, {threshold: 0, rootMargin: "0px"});
+}, {threshold: 0, rootMargin: "-50px"});
 
 appearText.observe(LearnDivM);
 

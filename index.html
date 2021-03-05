@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>El Baúl francés - Aprende francés, sus curiosidades, su color.</title>
+<title>El rincón
+ francés - Aprende francés, sus curiosidades, su color.</title>
 <meta charset="utf-8">
 <link rel="stylesheet" href="main.css">
 </head>
@@ -9,16 +10,16 @@
 <div id="App" class="full-width">
 	<transition name="fade" mode="out-in">
 		<section v-if="currentPage.index==-1" class="grid-rows-to-bottom bg-white1" key="Mainpage">
-			<nav class="row nav bg-blue-navy tx-white top-sticky pers-nav" id="Navbar">
+			<nav class="row nav bg-blue-navy tx-white top-sticky pers-nav no-overflow" id="MainpageNavbar">
 				<ul class="list on-right">
-					<li class="item tx-ii tx-ui-strong pad-l-i pad-r-i"><a class="nav-link link tx-hv-b1" @click="handlePageChange($event,1,'Artículos')">Entradas del Blog</a></li>
-					<li class="item tx-ii tx-ui-strong pad-l-i pad-r-i"><a class="nav-link link tx-hv-b1">Acerca de</a></li>
+					<li class="item tx-ii tx-ui-strong pad-l-i pad-r-i"><a class="nav-link link button-hv-line" @click="handlePageChange($event,1,'Artículos')">Entradas del Blog</a></li>
+					<li class="item tx-ii tx-ui-strong pad-l-i pad-r-i"><a class="nav-link link button-hv-line">Acerca de</a></li>
 					<li class="item tx-ii tx-ui-strong pad-l-i pad-r-i"><a class="nav-link button plain to action rnd">Contacto</a></li>
 				</ul>
 			</nav>
 			<header class="row header pers-start-div" id="MainpageHeader">
 				<div class="block mediumw bigh pad-l-i pad-r-i pad-top-i pers-hphrase shdw mid-rnd">
-					<h1 class="tx-v tx-script tx-white pers-text">¡Bienvenido al Baúl Francés!</h1>
+					<h1 class="tx-v tx-script tx-white pers-text">¡Bienvenido al Rincón Francés!</h1>
 					<h2 class="tx-iii tx-paragraph tx-white pers-text">Un blog para aprender sobre el idioma, su aura, su cultura, sus curiosidades y su historia.</h2>
 				</div>
 				<div class="mediumw full-height pers-eiffeldiv">
@@ -39,13 +40,13 @@
 			</div>
 			<div class="row pers-history-div bg-white1" id="MainpageHistDiv">
 					<div class="image fadeIn inactive">
-						<img src="assets/images/france2.jpg" class="showFromBottom">	
+						<img src="assets/images/liberty.jpg" alt="Pintura de la libertad en la independencia francesa" class="showFromBottom">
 					</div>
 					<div class="image fadeIn inactive">
-						<img src="assets/images/france2.jpg" class="showFromBottom">
+						<img src="assets/images/napoleon.jpg" alt="Napoleón montando un caballo" class="showFromBottom">
 					</div>
 					<div class="image fadeIn inactive">
-						<img src="assets/images/france2.jpg" class="showFromBottom">
+						<img src="assets/images/prise-de-la-bastille.webp" alt="Prisión de la Bastilla en llamas" class="showFromBottom">
 					</div>
 					<h3 class="tx-iv tx-elegant-strong pers-text hidden" id="MainpageHistPhrase">Explora la historia del idioma</h3>
 			</div>
@@ -54,38 +55,56 @@
 				<img src="assets/images/writing.jpg" alt="Persona escribiendo" class="pers-image" />
 			</div>
 			<div class="row row-add pers-connect-div bg-white1" id="MainpageConnectDiv">
-				<h3 class="tx-iv tx-elegant-strong mar-top mar-left pers-text">Todo y más, en el baúl francés</h2>
+				<h3 class="tx-iv tx-elegant-strong mar-top mar-left pers-text">Todo y más, en el Rincón Francés</h2>
 				<div class="mediumw full-height pers-circles">
 					<span></span>
 					<span></span>
 					<span></span>
-					<a class="button minimalist black pers-button" @click="handlePageChange($event,1,'Artículos')">Entrar&thinsp;al&thinsp;blog &rarr;</a>
+					<a class="tx-ii tx-ui button minimalist black pers-button mid-rnd" @click="handlePageChange($event,1,'Artículos')">Entrar&thinsp;&thinsp;al&thinsp;&thinsp;blog &rarr;</a>
 				</div>
 			</div>
 		</section>
 		<section v-else-if="currentPage.index!=-1" class="grid-smheader nomp" key="Blog">
-		<header class="header bg-blue1">
-			<h1 class="tx-iv tx-script tx-white clickable" @click="handlePageChange($e,0,'Artículos')"> {{sitename}} </h1>
+		<svg>
+		<filter id="wave">
+			<feTurbulence x="1" y="1" baseFrequency="0.003" numOctaves="8" seed="32">
+				<animate attributeName="baseFrequency" dur="30s" values="0.02;0.08;0.02" repeatCount="indefinite">
+				</animate>
+			</feTurbulence>
+			<feDisplacementMap in="SourceGraphic" scale="4"></feDisplacementMap>
+		</filter>	
+		</svg>
+		<header class="header pers-headerBlog bg-blue1" id="BlogHeader">
+			<img src="assets/images/arbusto4.png" class="elem">
+			<img src="assets/images/arbusto5.png" class="elem">
+			<img src="assets/images/arbusto2.png" class="elem">
+			<div class="sun"></div>
 		</header>
-		<nav class="nav full-width top-sticky">
-			<ul class="list slice5 line neumorph nomp full-width">
-			<a v-for="(opt,index) in navOptions" class="item nav-link tx-ii tx-ui-strong full-width" @click="handlePageChange($event,index,opt)">{{opt}}</a>
-			<span class="effect-span bg-red2"></span>
+		<nav class="nav full-width neumorph white top-sticky" id="BlogNavbar">
+		<transition name="fade" mode="out-in">
+			<img v-if="!navBlogScrolling" src="assets/images/logo.png" class="clickable logo pers-nav-logo pers-logo" @click="handlePageChange($event,0,'Inicio')" key="Logo" id="BlogNavbarLogo">
+			<a v-else-if="navBlogScrolling" class="tx-iv tx-elegant-strong pers-nav-logo full-height clickable abs-centered tx-shdw" @click="handlePageChange($event,0,'Inicio')" id="BlogNavbarTitle">El Rincón Francés</a>
+		</transition>
+			<ul class="list spaced neumorph white hideable nomp full-width oxh" id="BlogNavbarList">
+			<a v-for="(opt,index) in navOptions" class="item nav-link tx-ii tx-ui-strong full-width full-height" @click="handlePageChange($event,index,opt)">{{opt}}</a>
+			<span class="effect-span arrow-left transition bg-red2"></span>
+			<span class="effect-span arrow-right transition bg-red2"></span>
 			</ul>	
+			<div class="burger full-neumorph clickable" @click="changeBurger('BlogBurger','BlogNavbarList')" id="BlogBurger"><span v-for="n in 3" class="neumorph"></span></div>
 		</nav>
-		<div class="title tx-ii tx-elegant bg-white1 mar-left">
-			{{randomPhrase}}
+		<div class="title tx-ii tx-elegant bg-white1 mar-left mar-top">
+			{{randomPhrase.phrase | Cite}}
+			<br/>	
+			{{randomPhrase.author | CiteAuthor}}
 		</div>
-		<main class="narcissist full-width pad-top-ii pad-bttm-ii centered bg-white1">
+		<main class="narcissist pad-bttm-ii bg-white1">
 			<transition name="zoom-out" mode="out-in">
-			<section v-if="currentPage.index==1" class="main" key="articles-list">
+			<section v-if="currentPage.index==1" key="articles-list" class="full-width flex centered al-centered">
 			<article-preview v-if="currentPage.index==1" v-for="(article, index) in articles" class="card mediumw mediumh model1 rnd clickable neumorph rot15dyn tx-white tx-ui" :title="article.title" :description="article.description" @click.native="handlePageChange($event,index+10,article.title)" :key="'preview_' + article.title"></article-preview>
 			</section>
-			<section v-else-if="currentPage.index >= 10" :key="'article_' + articleContent.t">
-			<article-f1 :title='articleContent.t':subtitle="articleContent.d">
-			<section slot="article-content" v-html="articleContent.c" class="pers-article"></section>
+			<article-f1 v-else-if="currentPage.index >= 10" :key="'article_' + articleContent.t" :title='articleContent.t':subtitle="articleContent.d">
+			<section slot="article-content" v-html="articleContent.c"></section>
 			</article-f1>
-			</section>
 			<section v-if="currentPage.index == 0 || (currentPage.index >= 2 && currentPage.index <= 4)">
 				<in-progress></in-progress>
 			</section>
@@ -93,9 +112,11 @@
 		</main>
 		</section>
 	</transition>
-	<div class="pers-footer bg-blue-navy tx-silver tx-ii bottom-sticky">
+	<div class="pers-footer bg-blue-navy tx-silver tx-ii" id="Footer">
 		<div class="col mar-top">
 		<img src="assets/images/vuelogo.png" class="pers-vuelogo">
+		</div>
+		<div class="col mar-top mar-left">
 		<p>Hecho en Vue.js</p>
 		<p>¿Qué es Vue.js?</p>
 		<p>Ir a la web de Vue.js</p>
@@ -104,7 +125,7 @@
 		<p>Copyright 2020. Todos los derechos reservados.</p>	
 		</div>
 	</div>
-	<component v-show="currentEffect" :is="currentEffect"></component>
+	<circle-expand v-show="currentEffect.effect === 1" :posx="currentEffect.x" :posy="currentEffect.y"></circle-expand>
 </div>
 <script src="assets/vue.js"></script>
 <script src="main.js"></script>
